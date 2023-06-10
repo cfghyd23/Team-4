@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors')
 const Campaing = require('./models/campaing');
+const authenticateToken = require('./middleware'); // Assuming your token decoding middleware is in authenticateToken.js
 
 
 
@@ -62,8 +63,12 @@ app.post('/user/register', async (req, res) => {
         }
       ]
     });
-
+    // Add the user ID to the userIds array of the campaign
+    
     await newUser.save();
+
+    campaing.users.push(newUser._id);
+    await campaing.save();
     res.status(200).json(newUser);
   } catch (err) {
     console.log(err);
@@ -98,3 +103,57 @@ app.post('/user/login',async(req,res)=>{
         return res.status(500).send("login fialed")
     }
 })
+
+
+// Create a new campaign
+app.post('/campaigns', (req, res) => {
+    const { campaingname, totalFund } = req.body;
+  
+    // Check if the user is an admin
+    const userId = req.headers['user-id']; // Assuming the user ID is passed in the request header
+    User.findById(userId)
+      .then((user) => {
+        if (!user || !user.isAdmin) {
+          return res.status(401).json({ error: 'Only admins can add campaign details' });
+        }
+  
+        const campaign = new Campaing({
+          campaingname,
+          totalFund,
+          users: [],
+          adminOnly: true,
+        });
+  
+        campaign.save()
+          .then((result) => {
+            res.status(201).json(result);
+          })
+          .catch((error) => {
+            res.status(500).json({ error: 'Failed to create campaign' });
+          });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: 'Failed to authenticate user' });
+      });
+  });
+
+
+// Endpoint to get user object based on JWT token
+  app.get('/user', authenticateToken, (req, res) => {
+    const userId = req.user.id;
+  
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+  
+        // Return the user object
+        res.status(200).json(user);
+      })
+      .catch((error) => {
+        res.status(500).json({ error: 'Failed to retrieve user' });
+      });
+  });
+  
+  

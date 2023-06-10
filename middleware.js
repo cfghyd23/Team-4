@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { exists } = require('./models/usermodel');
+const { exists } = require('./models/user');
 
 module.exports = function (req,res,next){
     try{
