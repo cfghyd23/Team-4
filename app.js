@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const paymentsRoutes = require("./routes/payments");
+const userRoutes = require("./routes/userRoutes")
 require("dotenv").config();
 
 mongoose
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/auth", authRoutes);
 app.use("payments", paymentsRoutes);
+app.use("/api", userRoutes);
 
 // Error handling
 app.use((req, res, next) => {
