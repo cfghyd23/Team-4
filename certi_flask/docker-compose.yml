@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  cert-generator:
+    image: yash
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./certificates:/app/certificates
+      - ./qrs:/app/qrs
+      - ./static:/app/static
+      - ./fonts:/app/fonts
+    ports:
+      - 5002:5002
