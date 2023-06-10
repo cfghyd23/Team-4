@@ -1,10 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose')
 const bcrpyt = require('bcryptjs');
-const User = require('./models/usermodel');
+const User = require('./models/user');
 const jwt = require('jsonwebtoken');
 const app = express();
 const cors = require('cors')
+const Campaing = require('./models/campaing');
 
 
 
@@ -19,33 +20,57 @@ app.use(cors({origin:"*"}))
 
 
 
-//Registration
-app.post('/user/register',async(req,res)=>{
-    try{
-        const {name,email,phonenumber,fundsraised,password,workingprojects}=req.body;
-        let exist = await User.findOne({email})
-        if(exist){
-            return res.status(400).send("Already registered");
+
+app.post('/user/register', async (req, res) => {
+  try {
+    const { name, email, phonenumber, gender, password, campaingname } = req.body;
+    let exist = await User.findOne({ email });
+    if (exist) {
+      return res.status(400).send("Already registered");
+    }
+
+    const hashedPassword = bcrpyt.hashSync(password);
+
+    // Fetch campaingId using campaingname from the campaings table
+    const campaing = await Campaing.findOne({ campaingname: campaingname });
+
+    if (!campaing) {
+      return res.status(400).send("Invalid campaingname");
+    }
+
+    let newUser = new User({
+      name,
+      email,
+      phonenumber,
+      password: hashedPassword,
+      gender,
+      isAdmin : false,
+      isInternAccepted:false,
+      campaings: [
+        {
+          campaing: campaing._id,
+          fundscollected: "0",
+          fundstonextmilestone: "0",
+          mileStonesPassed: "0"
         }
-        const hashedPassword= bcrpyt.hashSync(password);
-        let newUser = new User({
-            name,
-            email,
-            phonenumber,
-            fundsraised,
-            workingprojects,
-            password:hashedPassword,
-        })
+      ],
+      rewards: [
+        {
+            certificates: [ ],
+            goodies: [ ],
+            lor: [ ]
+        }
+      ]
+    });
 
-        await newUser.save();
-        res.status(200).json(newUser);
+    await newUser.save();
+    res.status(200).json(newUser);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).send("failed");
+  }
+});
 
-    }
-    catch(err){
-        console.log(err);
-        return res.status(400).send("failed")
-    }
-})
 //login
 app.post('/user/login',async(req,res)=>{
     try{
