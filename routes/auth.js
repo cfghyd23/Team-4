@@ -1,10 +1,7 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const bcrpyt = require("bcryptjs");
 const User = require("../models/user");
 const jwt = require("jsonwebtoken");
-const app = express();
-const cors = require("cors");
 const Campaing = require("../models/campaing");
 const router = express.Router();
 
