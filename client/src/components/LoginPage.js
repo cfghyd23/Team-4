@@ -62,15 +62,19 @@ const LoginPage = () => {
 
   const navigate = useHistory();
   const handleSubmit = (e) => {
-    navigate("/dashboard");
+    // navigate("/dashboard");
+    // e.preventDefault();
+    // // Here you can perform your login logic, such as making an API request
+    // // with the email and password
+    // console.log("Email:", email);
+    // console.log("Password:", password);
+    // // Reset the form after submission
+    // setEmail("");
+    // setPassword("");
+
     e.preventDefault();
-    // Here you can perform your login logic, such as making an API request
-    // with the email and password
-    console.log("Email:", email);
-    console.log("Password:", password);
-    // Reset the form after submission
-    setEmail("");
-    setPassword("");
+    window.localStorage.setItem("username", email);
+    window.location.href = "/dashboard";
   };
 
   const containerStyle = {

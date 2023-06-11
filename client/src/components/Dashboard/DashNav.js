@@ -14,7 +14,7 @@ const DashNav = () => {
           Marpu Foundation
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="/dashboard" style={{ marginLeft: "300px" }}>
+          <Nav.Link href="/dashboard" style={{ marginLeft: "200px" }}>
             Overview
           </Nav.Link>
           <Nav.Link href="/dashboard/rewards" style={{ marginLeft: "10px" }}>
@@ -25,7 +25,7 @@ const DashNav = () => {
             Alumni Contact
           </Nav.Link>
           <Nav.Link href="#username" style={{ marginLeft: "10px" }}>
-            Username
+            {window.localStorage.getItem("username")}
           </Nav.Link>
         </Nav>
       </Container>
