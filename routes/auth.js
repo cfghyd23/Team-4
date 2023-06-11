@@ -64,15 +64,6 @@ const router = express.Router();
 const nodemailer = require('nodemailer');
 const { v4: uuidv4 } = require('uuid');
 
-// const transporter = nodemailer.createTransport({
-//   host: 'smtp.gmail.com', // SMTP server hostname
-//   port: 587, // SMTP server port
-//   secure: false, // Set to true for TLS/STARTTLS connection (port 465)
-//   auth: {
-//     user: '2000032072cse@gmail.com', // Your email address
-//     pass: 'Janu@598' // Your email password or app-specific password
-//   }
-// });
 const transporter = nodemailer.createTransport({
   service: 'gmail', // Use the appropriate email service provider
   auth: {

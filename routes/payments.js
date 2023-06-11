@@ -9,15 +9,15 @@ router.post("/webhook", async (req, res) => {
     console.log(req.body);
     const form_url = req.body.form.form_url;
     // url of the form https://payments-test.cashfree.com/forms/intern1-campaign1
-    // extract intern1-campaign1 from the url
+
     const campaingname = form_url.split("/").pop();
     // separate intern1 and campaign1
     const [internID, campaingID] = campaingname.split("-");
-    const amount = req.body.order.order_amount;
+    const amount = parseInt(req.body.order.order_amount);
+
     const status = req.body.order.order_status;
     if (status === "PAID") {
       // update the user's fundscollected and fundstonextmilestone
-
       User.findOneAndUpdate(
         { _id: internID, "campaings.campaing": campaingID },
         {
@@ -28,7 +28,8 @@ router.post("/webhook", async (req, res) => {
         { new: true }
       ).exec();
     }
-    res.status(200).send("success");
+
+    res.status(200).json({ status: "Fund added to user" });
   } catch (err) {
     console.log(err);
     res.status(400).send("failed");
