@@ -1,6 +1,4 @@
 import React from "react";
-import LoginPage from "./LoginPage";
-import { NavLink } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -11,17 +9,25 @@ const Header = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand>Marpu</Navbar.Brand>
+        <Navbar.Brand href="/">Marpu</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link>Marpu</Nav.Link>
-            <Nav.Link href="login">Login</Nav.Link>
-            <NavDropdown title="Causes" id="basic-nav-dropdown">
+            <Nav.Link href="login" style={{ margin: "0 10px" }}>
+              Login
+            </Nav.Link>
+            <NavDropdown
+              title="Causes"
+              id="basic-nav-dropdown"
+              style={{ margin: "0 10px" }}
+            >
               <NavDropdown.Item href="register">Child Care</NavDropdown.Item>
               <NavDropdown.Item href="register">Environment</NavDropdown.Item>
               <NavDropdown.Item href="register">Old age homes</NavDropdown.Item>
             </NavDropdown>
+            <Nav.Link href="dashboard" style={{ margin: "0 10px" }}>
+              Dashboard
+            </Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

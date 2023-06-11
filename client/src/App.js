@@ -1,28 +1,45 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import RegistrationForm1 from "./components/RegistrationForm1";
 import LoginPage from "./components/LoginPage";
 import Carousel from "./components/Carousel";
 import Admin from "./components/Admin";
-
-import Header from "./components/Header";
+import DashNav from "./components/Dashboard/DashNav";
+import Overview from "./components/Dashboard/Overview";
+import Reward from "./components/Dashboard/Reward";
 
 // import './Admin.js';
 
 function App() {
   return (
     <div>
-      <Header />
-      <Routes>
-        <Route path="/" Component={Carousel}>
-          {/* <Carousel/> */}
-          {/* <Admin/> */}
+      <Switch>
+        <Route exact path="/">
+          <Carousel />
         </Route>
-        <Route path="/register" Component={RegistrationForm1} />
-        <Route path="/login" Component={LoginPage} />
-        <Route path="/admin" Component={Admin}></Route>
-      </Routes>
+        <Route path="/register">
+          <RegistrationForm1 />
+        </Route>
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+        <Route path="/admin">
+          <Admin />
+        </Route>
+        <Route path="/dashboard">
+          <>
+            <DashNav />
+            <Route exact path={"/dashboard"}>
+              <Overview />
+            </Route>
+            <Route path="/dashboard/rewards">
+              <Reward />
+            </Route>
+            <Route path="/dashboard/alumni">Alumni</Route>
+          </>
+        </Route>
+      </Switch>
     </div>
   );
 }
