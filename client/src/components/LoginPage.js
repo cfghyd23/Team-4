@@ -59,7 +59,9 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
+    navigate("/dashboard");
     e.preventDefault();
     // Here you can perform your login logic, such as making an API request
     // with the email and password
