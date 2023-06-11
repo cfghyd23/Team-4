@@ -8,24 +8,24 @@ const router = express.Router();
 
 
 
-
-// router.get('/user', authenticateToken, (req, res) => {
-//     const userId = req.user.id;
+//get user
+router.get('/get/user', authenticateToken, (req, res) => {
+    const userId = req.user.id;
   
-//     User.findById(userId)
-//       .then((user) => {
-//         if (!user) {
-//           return res.status(404).json({ error: 'User not found' });
-//         }
+    User.findById(userId)
+      .then((user) => {
+        if (!user) {
+          return res.status(404).json({ error: 'User not found' });
+        }
   
-//         // Return the user object
-//         res.status(200).json(user);
-//       })
-//       .catch((error) => {
-//         res.status(500).json({ error: 'Failed to retrieve user' });
-//       });
-//   });
-
+        // Return the user object
+        res.status(200).json(user);
+      })
+      .catch((error) => {
+        res.status(500).json({ error: 'Failed to retrieve user' });
+      });
+  });
+//register
 
 router.post("/register", async (req, res) => {
     try {
@@ -74,19 +74,18 @@ router.post("/register", async (req, res) => {
   
       await newUser.save();
   
-      // Send email to the user with login credentials and Google Meet link
+      // Send email to the user with login credentials and Teams Meet link
       // Alternatively, you can configure the transporter with an SMTP server
   const transporter = nodemailer.createTransport({
-    host: 'smtp.example.com', // SMTP server hostname
-    port: 587, // SMTP server port
-    secure: false, // Set to true for TLS/STARTTLS connection (port 465)
+    service: 'gmail', // Use the appropriate email service provider
     auth: {
-      user: 'bjahnavi5989@gmail.com', // Your email address
-      pass: 'Indhu@2012' // Your email password or app-specific password
+      user: '2000032072cse@gmail.com', // Your email address
+      pass: '' // Your email password or app-specific password
     }
   });
+  
       const mailOptions = {
-        from: 'bjahnavi5989@gmail.com',
+        from: '2000032072cse@gmail.com',
         to: email,
         subject: 'Registration Successful',
         html: `<p>Dear ${name},</p>
@@ -98,7 +97,7 @@ router.post("/register", async (req, res) => {
           <p>Thank you for registering. Please login using the provided credentials.</p>`,
       };
       const mailOptionsMeet = {
-        from: 'bjahnavi5989@gmail.com',
+        from: '2000032072cse@gmail.com',
         to: email,
         subject: 'Registration Successful You are invited to Orientation Session',
         html: `<p>Dear ${name},</p>
@@ -126,3 +125,53 @@ router.post("/register", async (req, res) => {
       return res.status(400).send("Failed");
     }
   });
+
+
+  router.delete('/delete/user', authenticateToken, (req, res) => {
+    const userId = req.user.id;
+  
+    User.findByIdAndDelete(userId)
+      .then((deletedUser) => {
+        if (!deletedUser) {
+          return res.status(404).json({ error: 'User not found' });
+        }
+  
+        // Optionally, you can also invalidate the token here if desired
+  
+        res.status(200).json({ message: 'User deleted successfully' });
+      })
+      .catch((error) => {
+        res.status(500).json({ error: 'Failed to delete user' });
+      });
+  });
+//login
+router.post('/login',async(req,res)=>{
+    try{
+        const {email,password}=req.body;
+        let exist = await User.findOne({email});
+        if(!exist){
+            return res.status(400).send("user not found");
+        }
+        const isPasswordCorrect= await bcrpyt.compareSync(password,exist.password);
+        if(!isPasswordCorrect){
+            return res.status(400).send("Bad credentials");
+        }
+        let payload={
+            user:{
+                id: exist.id
+            }
+        }
+        jwt.sign(payload,'jwtSecret',{expiresIn:3600000},(err,token)=>{
+            if(err) throw err
+            return res.json({token,user:exist})
+        })
+    }
+    catch(err){
+        console.log(err);
+        return res.status(500).send("login fialed")
+    }
+})
+  module.exports = router;
+
+  
+  
