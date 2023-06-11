@@ -9,7 +9,7 @@
 In their quest to make a greater impact, they are grappling with some operational challenges that is limiting their effectiveness. The current system of handling internships. particularly fundraising interns, is heavily manual and time-consuming. The process involves multiple steps like explaining the cause, creating empathy, providing regular updates, and issuing certificates, rewards. The intensive nature of this process often results in an inconsistent experience for the interns and is becoming increasingly difficult for their team to manage.
 ## Challenge
 They envision a solution that automates the internship management process, with special emphasis on their fundraising efforts. The solution should be capable of automating each step, from orientation to the issuance of certificates and other rewards, making the process seamless and enjoyable for their interns. The solution should also instill empathy and understanding about the cause among the interns, enabling them to become effective advocates.
-## Run Locally
+## Run Locally(Primary Branch : master)
 
 Clone the project from master branch
 
