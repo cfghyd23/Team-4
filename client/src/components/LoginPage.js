@@ -45,6 +45,7 @@
 
 // export default LoginPage
 import React, { useState } from 'react';
+import { useHistory, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -58,7 +59,9 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
+    navigate('/dashboard');
     e.preventDefault();
     // Here you can perform your login logic, such as making an API request
     // with the email and password
@@ -115,7 +118,7 @@ const LoginPage = () => {
 
   return (
     <div style={containerStyle}>
-      <form onSubmit={handleSubmit} style={formStyle}>
+      <form style={formStyle}>
         <h1 style={headingStyle}>Login Page</h1>
         <div>
           <label>Email:</label>
@@ -126,7 +129,7 @@ const LoginPage = () => {
           <input type="password" value={password} onChange={handlePasswordChange} required style={inputStyle} />
         </div>
         <div>
-          <button type="submit" style={buttonStyle}>Login</button>
+          <button type="submit" style={buttonStyle} onClick={handleSubmit}>Login</button>
         </div>
       </form>
     </div>

@@ -7,13 +7,20 @@ import Carousel from "./components/Carousel";
 import Admin from "./components/Admin";
 
 import Header from "./components/Header";
+import Dashboard from "./components/dashboard";
 
 // import './Admin.js';
 
 function App() {
   return (
     <div>
-      <Header />
+        <div>
+        <Routes>
+        <Route path='/dashboard' Component={Dashboard}></Route>
+        </Routes>
+        </div>
+        <div>
+        <Header />
       <Routes>
         <Route path="/" Component={Carousel}>
           {/* <Carousel/> */}
@@ -22,7 +29,11 @@ function App() {
         <Route path="/register" Component={RegistrationForm1} />
         <Route path="/login" Component={LoginPage} />
         <Route path="/admin" Component={Admin}></Route>
+        
+        
       </Routes>
+        </div>
+      
     </div>
   );
 }
