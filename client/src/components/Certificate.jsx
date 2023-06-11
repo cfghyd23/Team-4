@@ -5,7 +5,7 @@ const Certificate = () => {
   return (
     
 <>
-<Navbar/>
+
 <div>
     <h1 className='flex justify-center text-3xl text-orange-600 m-3'> Internships Completed </h1>
     <div className='m-3 ml-5 shadow-sm p-4 bg-blue-200'>

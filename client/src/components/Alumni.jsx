@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 const Alumni = () => {
   return (
 <>
-<Navbar/>
+
 <div className="flex flex-col">
             <div className="overflow-x-auto">
                 <div className="p-1.5 w-full inline-block align-middle">
