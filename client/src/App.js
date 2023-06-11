@@ -8,6 +8,8 @@ import Admin from "./components/Admin";
 import DashNav from "./components/Dashboard/DashNav";
 import Overview from "./components/Dashboard/Overview";
 import Reward from "./components/Dashboard/Reward";
+import Certificate from "./components/Certificate";
+import Alumni from "./components/Alumni";
 
 // import './Admin.js';
 
@@ -41,9 +43,11 @@ function App() {
               <Overview />
             </Route>
             <Route path="/dashboard/rewards">
-              <Reward />
+              <Certificate />
             </Route>
-            <Route path="/dashboard/alumni">Alumni</Route>
+            <Route path="/dashboard/alumni">
+              <Alumni />
+            </Route>
           </>
         </Route>
       </Switch>

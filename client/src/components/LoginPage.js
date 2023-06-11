@@ -46,6 +46,7 @@
 // export default LoginPage
 import React, { useState } from "react";
 import Header from "./Header";
+import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -59,7 +60,7 @@ const LoginPage = () => {
     setPassword(e.target.value);
   };
 
-  const navigate = useNavigate();
+  const navigate = useHistory();
   const handleSubmit = (e) => {
     navigate("/dashboard");
     e.preventDefault();
