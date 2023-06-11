@@ -15,6 +15,13 @@ function App() {
   return (
     <div>
       <Switch>
+        <Route path="/thankyou" exact>
+          <>
+            <h1 className="w-full text-center p-16 bg-green-300 bg-opacity-30 rounded-md">
+              Thank you for registering!
+            </h1>
+          </>
+        </Route>
         <Route exact path="/">
           <Carousel />
         </Route>

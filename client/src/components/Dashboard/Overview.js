@@ -36,7 +36,7 @@ export default function Overview() {
           </Col>
         </Row>
       </Container>
-      <div className="flex flex-row items-center justify-between my-8 mx-8 w-full">
+      <div className="flex flex-row items-center justify-around my-8 mx-8 w-full">
         <h5 className="">Current Fundraiser Cause: {data.campaigns[0].name}</h5>
         <h5>Funds Collected: ₹{data.campaigns[0].fundscollected}</h5>
         <h5>Next Milestone: ₹{data.campaigns[0].fundstonextmilestone}</h5>
@@ -45,7 +45,9 @@ export default function Overview() {
         <span className="font-semibold text-orange-600">
           🔗 Fundraiser URL:{" "}
         </span>
-        https://payments-test.cashfree.com/forms/intern1-campaign1
+        <a href="https://payments-test.cashfree.com/forms/intern1-campaign1">
+          https://payments-test.cashfree.com/forms/intern1-campaign1
+        </a>
       </span>
     </div>
   );

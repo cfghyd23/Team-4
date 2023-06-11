@@ -1,92 +1,12 @@
-// import React, { useState } from 'react';
-
-// function RegistrationForm1() {
-//   const [phoneNumber, setPhoneNumber] = useState('');
-//   const [selectedProject, setSelectedProject] = useState('');
-
-//   const handlePhoneNumberChange = (e) => {
-//     setPhoneNumber(e.target.value);
-//   };
-
-//   const handleProjectChange = (e) => {
-//     setSelectedProject(e.target.value);
-//   };
-
-//   return (
-//     <div className="form">
-//       <div className="form-body">
-//         <div className="username">
-//           <label className="form__label" htmlFor="Name">
-//             Name
-//           </label>
-//           <input
-//             className="form__input"
-//             type="text"
-//             id="Name"
-//             placeholder="Name"
-//           />
-//         </div>
-
-//         <div className="email">
-//           <label className="form__label" htmlFor="email">
-//             Email
-//           </label>
-//           <input
-//             type="email"
-//             id="email"
-//             className="form__input"
-//             placeholder="Email"
-//           />
-//         </div>
-
-//         {/* Add phone number field */}
-//         <div className="phone-number">
-//           <label className="form__label" htmlFor="phoneNumber">
-//             Phone Number
-//           </label>
-//           <input
-//             className="form__input"
-//             type="tel"
-//             id="phoneNumber"
-//             placeholder="Phone Number"
-//             value={phoneNumber}
-//             onChange={handlePhoneNumberChange}
-//           />
-//         </div>
-//         {/* Add projects dropdown */}
-//         <div className="projects">
-//           <label className="form__label" htmlFor="projects">
-//             Projects
-//           </label>
-//           <select
-//             className="form__input"
-//             id="projects"
-//             value={selectedProject}
-//             onChange={handleProjectChange}
-//           >
-//             <option value="">Select a project</option>
-//             <option value="project1">Environmemtal Substainalibility</option>
-//             <option value="project2">Economic Development</option>
-//             <option value="project3">Social development</option>
-//             <option value="project3">Partner for goals</option>
-
-//           </select>
-//         </div>
-//       </div>
-//       <div className="footer">
-//         <button type="submit" className="btn">
-//           Register
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
 // export default RegistrationForm1;
 import React, { useState } from "react";
 import Header from "./Header";
+import axios from "axios";
 
 const RegistrationForm1 = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [selectedProject, setSelectedProject] = useState("");
 
@@ -94,8 +14,46 @@ const RegistrationForm1 = () => {
     setPhoneNumber(e.target.value);
   };
 
+  const handleNameChange = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
+
   const handleProjectChange = (e) => {
     setSelectedProject(e.target.value);
+  };
+
+  const handleGenderChange = (e) => {
+    setGender(e.target.value);
+  };
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const body = {
+      name,
+      email,
+      gender,
+      phonenumber: phoneNumber,
+      campaingname: selectedProject,
+    };
+    console.log(body);
+
+    axios.defaults.baseURL = "http://localhost:8000";
+
+    axios
+      .post("/auth/register", body)
+      .then((res) => {
+        console.log(res);
+        console.log("Registered");
+
+        window.location.href = "/thankyou";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const formStyle = {
@@ -159,6 +117,8 @@ const RegistrationForm1 = () => {
               type="text"
               id="Name"
               placeholder="Name"
+              value={name}
+              onChange={handleNameChange}
             />
           </div>
 
@@ -171,6 +131,8 @@ const RegistrationForm1 = () => {
               id="email"
               style={inputStyle}
               placeholder="Email"
+              value={email}
+              onChange={handleEmailChange}
             />
           </div>
 
@@ -189,6 +151,23 @@ const RegistrationForm1 = () => {
             />
           </div>
 
+          <div className="gender">
+            <label style={labelStyle} htmlFor="gender">
+              Gender
+            </label>
+            <select
+              style={inputStyle}
+              id="gender"
+              value={gender}
+              onChange={handleGenderChange}
+            >
+              <option value="">Select gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Others</option>
+            </select>
+          </div>
+
           {/* Add projects dropdown */}
           <div className="projects">
             <label style={labelStyle} htmlFor="projects">
@@ -201,15 +180,17 @@ const RegistrationForm1 = () => {
               onChange={handleProjectChange}
             >
               <option value="">Select a project</option>
-              <option value="project1">Environmental Sustainability</option>
-              <option value="project2">Economic Development</option>
-              <option value="project3">Social Development</option>
-              <option value="project3">Partnership for Goals</option>
+              <option value="EnvironmentalSustainability">
+                Environmental Sustainability
+              </option>
+              <option value="EconomicDevlopment">Economic Development</option>
+              <option value="SocialDevelopment">Social Development</option>
+              <option value="PartnershipforGoals">Partnership for Goals</option>
             </select>
           </div>
         </div>
         <div style={footerStyle}>
-          <button type="submit" style={buttonStyle}>
+          <button type="submit" style={buttonStyle} onClick={handleRegister}>
             Register
           </button>
         </div>
