@@ -11,7 +11,8 @@ In their quest to make a greater impact, they are grappling with some operationa
 They envision a solution that automates the internship management process, with special emphasis on their fundraising efforts. The solution should be capable of automating each step, from orientation to the issuance of certificates and other rewards, making the process seamless and enjoyable for their interns. The solution should also instill empathy and understanding about the cause among the interns, enabling them to become effective advocates.
 ## Run Locally
 
-Clone the project
+Clone the project from master branch
+
 
 ```bash
   git clone https://link-to-project
